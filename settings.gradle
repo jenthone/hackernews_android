@@ -1,0 +1,4 @@
+rootProject.name='Hacker News'
+include ':presentation'
+include ':domain'
+include ':data'
