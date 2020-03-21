@@ -37,7 +37,7 @@ class StoryAdapter(
 
     fun notify(item: Item) {
         items[item.id] = item
-        notifyDataSetChanged()
+        notifyItemChanged(ids.indexOf(item.id))
     }
 }
 
