@@ -6,7 +6,6 @@ import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.domain.repository.ItemRepository
 import io.github.jenthone.hackernews.domain.repository.StoryRepository
-import io.github.jenthone.hackernews.helper.toImmutable
 import kotlinx.coroutines.launch
 
 class ItemViewModel(
@@ -14,9 +13,9 @@ class ItemViewModel(
     private val storyRepository: StoryRepository
 ) : ViewModel() {
     private val resultStories = MutableLiveData<AsyncResult<List<Int>>>(AsyncResult.Initialize)
-    val liveResultStories = resultStories.toImmutable()
+    val liveResultStories: LiveData<AsyncResult<List<Int>>> = resultStories
     private val resultItem = MutableLiveData<AsyncResult<Item>>(AsyncResult.Initialize)
-    val liveResultItem = resultItem.toImmutable()
+    val liveResultItem: LiveData<AsyncResult<Item>> = resultItem
 
     fun fetchItems(type: StoryType) {
         viewModelScope.launch {

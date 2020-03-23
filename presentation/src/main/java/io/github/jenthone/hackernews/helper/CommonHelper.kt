@@ -15,7 +15,3 @@ fun Int.timeFormat(): String {
 fun <T> LiveData<T>.observe(owner: LifecycleOwner, action: (T) -> Unit) {
     observe(owner, Observer { action(it) })
 }
-
-fun <T> MutableLiveData<T>.toImmutable(): LiveData<T> {
-    return this
-}
