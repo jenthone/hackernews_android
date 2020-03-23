@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
+import io.github.jenthone.hackernews.helper.observe
 import io.github.jenthone.hackernews.mapper.toPresentation
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_story.*
@@ -25,7 +25,6 @@ class StoryFragment : Fragment() {
             }
         }
     }
-
 
     private val vmItem by viewModel<ItemViewModel>()
 
@@ -65,7 +64,7 @@ class StoryFragment : Fragment() {
     }
 
     private fun initViewModels() {
-        vmItem.resultStories.observe(viewLifecycleOwner, Observer { result ->
+        vmItem.liveResultStories.observe(viewLifecycleOwner) { result ->
             srlItem.isRefreshing = false
             when (result) {
                 is AsyncResult.Success -> {
@@ -76,9 +75,9 @@ class StoryFragment : Fragment() {
                     Timber.e(result.exception)
                 }
             }
-        })
+        }
 
-        vmItem.resultItem.observe(viewLifecycleOwner, Observer { result ->
+        vmItem.liveResultItem.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is AsyncResult.Success -> {
                     rcvItem.post {
@@ -86,7 +85,7 @@ class StoryFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     private fun initAdapter(ids: List<Int>) {
