@@ -1,9 +1,10 @@
-package io.github.jenthone.hackernews.ui
+package io.github.jenthone.hackernews.ui.story
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import io.github.jenthone.hackernews.domain.entity.StoryType
+import io.github.jenthone.hackernews.ui.story.StoryFragment
 
 class StoryPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(
     fm,

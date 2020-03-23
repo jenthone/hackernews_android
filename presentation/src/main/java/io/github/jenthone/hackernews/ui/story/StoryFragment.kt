@@ -1,4 +1,4 @@
-package io.github.jenthone.hackernews.ui
+package io.github.jenthone.hackernews.ui.story
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
+import io.github.jenthone.hackernews.entity.Item
 import io.github.jenthone.hackernews.helper.observe
+import io.github.jenthone.hackernews.helper.openLink
 import io.github.jenthone.hackernews.mapper.toPresentation
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_story.*
@@ -19,11 +21,12 @@ import timber.log.Timber
 
 class StoryFragment : Fragment() {
     companion object {
-        fun newInstance(type: String) = StoryFragment().apply {
-            arguments = Bundle().apply {
-                this.putString("type", type)
+        fun newInstance(type: String) = StoryFragment()
+            .apply {
+                arguments = Bundle().apply {
+                    this.putString("type", type)
+                }
             }
-        }
     }
 
     private val vmItem by viewModel<ItemViewModel>()
@@ -89,9 +92,15 @@ class StoryFragment : Fragment() {
     }
 
     private fun initAdapter(ids: List<Int>) {
-        adapter = StoryAdapter(ids) {
-            vmItem.fetchItem(it)
-        }
+        adapter = StoryAdapter(ids, listener = object : StoryAdapterListener {
+            override fun onBindEmptyItem(id: Int) {
+                vmItem.fetchItem(id)
+            }
+
+            override fun onOpenItemUrl(item: Item) {
+                context?.openLink(item.url ?: return)
+            }
+        })
 
         rcvItem.adapter = adapter
     }

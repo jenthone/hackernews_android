@@ -3,6 +3,7 @@ package io.github.jenthone.hackernews.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.github.jenthone.hackernews.R
+import io.github.jenthone.hackernews.ui.story.StoryPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +18,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        adapter = StoryPagerAdapter(supportFragmentManager)
+        adapter = StoryPagerAdapter(
+            supportFragmentManager
+        )
         vpMain.adapter = adapter
         tlMain.setupWithViewPager(vpMain)
     }
