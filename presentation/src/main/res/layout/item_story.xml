@@ -6,16 +6,15 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
+    <ImageView
+        android:id="@+id/imvThumbnail"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tootls:text="Title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvUrl"
@@ -24,10 +23,21 @@
         android:layout_marginTop="4dp"
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imvThumbnail"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toTopOf="parent"
         tootls:text="https://news.ycombinator.com/news" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/imvThumbnail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUrl"
+        tootls:text="Title" />
 
     <TextView
         android:id="@+id/tvBy"
@@ -37,7 +47,7 @@
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUrl"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tootls:text="By" />
 
     <TextView
@@ -48,9 +58,9 @@
         android:layout_marginTop="4dp"
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imvThumbnail"
         app:layout_constraintStart_toEndOf="@id/tvBy"
-        app:layout_constraintTop_toBottomOf="@id/tvUrl"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tootls:text="" />
 
     <TextView
