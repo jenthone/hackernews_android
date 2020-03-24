@@ -7,17 +7,6 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/tvBy"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tootls:text="By" />
-
-    <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,13 +14,14 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBy"
+        app:layout_constraintTop_toTopOf="parent"
         tootls:text="Title" />
 
     <TextView
         android:id="@+id/tvUrl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,13 +30,53 @@
         tootls:text="https://news.ycombinator.com/news" />
 
     <TextView
+        android:id="@+id/tvBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUrl"
+        tootls:text="By" />
+
+    <TextView
         android:id="@+id/tvTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvBy"
         app:layout_constraintTop_toBottomOf="@id/tvUrl"
         tootls:text="" />
+
+    <TextView
+        android:id="@+id/tvScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_favorite"
+        android:drawablePadding="2dp"
+        android:textColor="#F92672"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBy"
+        tootls:text="1" />
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_comment"
+        android:drawablePadding="2dp"
+        android:textColor="#F92672"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/tvScore"
+        app:layout_constraintTop_toBottomOf="@id/tvBy"
+        tootls:text="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

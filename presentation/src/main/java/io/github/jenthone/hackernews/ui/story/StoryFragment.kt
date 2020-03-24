@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import io.github.jenthone.hackernews.R
+import io.github.jenthone.hackernews.data.Const
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.entity.Item
@@ -99,6 +100,10 @@ class StoryFragment : Fragment() {
 
             override fun onOpenItemUrl(item: Item) {
                 context?.openLink(item.url ?: return)
+            }
+
+            override fun onOpenItemCreator(item: Item) {
+                context?.openLink("${Const.BASE_WEB_URL}user?id=${item.by}")
             }
         })
 
