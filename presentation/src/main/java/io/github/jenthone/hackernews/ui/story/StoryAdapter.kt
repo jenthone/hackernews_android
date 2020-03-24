@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.entity.Item
+import io.github.jenthone.hackernews.helper.loadIcon
 import io.github.jenthone.hackernews.helper.timeFormat
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_story.*
@@ -79,11 +81,12 @@ class StoryViewHolder(override val containerView: View) :
         tvTitle.text = item.title
 
         tvBy.text = item.by
-        tvUrl.isVisible = item.url != null
 
+        tvUrl.isVisible = item.url != null
         item.url?.let {
             tvUrl.text = Uri.parse(it).host
         }
+        imvThumbnail.loadIcon(item.url)
 
         tvTime.isVisible = item.time != null
         item.time?.let {
@@ -94,12 +97,16 @@ class StoryViewHolder(override val containerView: View) :
             listener.onOpenItemUrl(item)
         }
 
+        imvThumbnail.setOnClickListener {
+            listener.onOpenItemUrl(item)
+        }
+
         tvBy.setOnClickListener {
             listener.onOpenItemCreator(item)
         }
 
         val score = item.score ?: 0
-        tvScore.text = "${score}"
+        tvScore.text = "$score"
 
         val descendants = item.descendants ?: 0
 

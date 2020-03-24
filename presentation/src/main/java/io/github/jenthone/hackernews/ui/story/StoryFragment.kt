@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.data.Const
@@ -60,6 +62,7 @@ class StoryFragment : Fragment() {
 
     private fun initViews() {
         rcvItem.layoutManager = LinearLayoutManager(context)
+        rcvItem.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         rcvItem.setHasFixedSize(true)
 
         srlItem.setOnRefreshListener {
