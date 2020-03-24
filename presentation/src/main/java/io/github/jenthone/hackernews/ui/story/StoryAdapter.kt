@@ -93,6 +93,18 @@ class StoryViewHolder(override val containerView: View) :
         tvUrl.setOnClickListener {
             listener.onOpenItemUrl(item)
         }
+
+        tvBy.setOnClickListener {
+            listener.onOpenItemCreator(item)
+        }
+
+        val score = item.score ?: 0
+        tvScore.text = "${score}"
+
+        val descendants = item.descendants ?: 0
+
+        tvComment.isVisible = descendants > 0
+        tvComment.text = "$descendants"
     }
 }
 
@@ -116,4 +128,6 @@ interface StoryAdapterListener {
     fun onBindEmptyItem(id: Int)
 
     fun onOpenItemUrl(item: Item)
+
+    fun onOpenItemCreator(item: Item)
 }

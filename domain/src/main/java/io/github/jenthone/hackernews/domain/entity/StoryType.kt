@@ -1,8 +1,8 @@
 package io.github.jenthone.hackernews.domain.entity
 
 enum class StoryType {
-    NEW,
     TOP,
+    NEW,
     BEST,
     ASK,
     SHOW,
