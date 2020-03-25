@@ -18,7 +18,9 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tlMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="4dp" />
     </androidx.viewpager.widget.ViewPager>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
