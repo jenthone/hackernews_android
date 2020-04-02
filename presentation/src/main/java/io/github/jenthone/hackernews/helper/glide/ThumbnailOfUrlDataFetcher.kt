@@ -1,11 +1,13 @@
 package io.github.jenthone.hackernews.helper.glide
 
+import android.net.Uri
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.data.DataFetcher
 import io.github.jenthone.hackernews.domain.helper.exception.DataNotFoundException
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.jsoup.Jsoup
 import org.koin.java.KoinJavaComponent.inject
 import java.io.InputStream
 
@@ -42,8 +44,28 @@ class ThumbnailOfUrlDataFetcher(
             return
         }
 
-        // TODO: Parse url thumbnail by using jsoup.
+        val doc = Jsoup.parse(content)
+        val metaOgImage = doc.select("meta[property=og:image]")
+        val urlThumbnailFromOgTag = metaOgImage?.attr("content")
+        val urlThumbnail = urlThumbnailFromOgTag ?: getThumbnailUrlOfHost()
 
-        // TODO: Load input stream from url-thumbnail.
+        val requestUrlThumbnail = Request.Builder()
+            .url(urlThumbnail)
+            .build()
+        val inputStream = try {
+            okHttpClient.newCall(requestUrlThumbnail)
+                .execute()
+                .body?.byteStream()
+                ?: throw DataNotFoundException()
+        } catch (e: Exception) {
+            callback.onLoadFailed(e)
+            return
+        }
+        callback.onDataReady(inputStream)
+    }
+
+    private fun getThumbnailUrlOfHost(): String {
+        val host = Uri.parse(model).host
+        return "https://api.faviconkit.com/${host}/128"
     }
 }
