@@ -15,7 +15,7 @@ import java.io.InputStream
  * A data fetcher for load thumbnail image from the given url.
  */
 class ThumbnailOfUrlDataFetcher(
-    private val model: String
+    private val model: ThumbnailUrlRequest
 ) : DataFetcher<InputStream> {
 
     private val okHttpClient: OkHttpClient by inject(OkHttpClient::class.java)
@@ -33,8 +33,9 @@ class ThumbnailOfUrlDataFetcher(
     }
 
     override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) {
+        val url = model.url
         val request = Request.Builder()
-            .url(model)
+            .url(url)
             .build()
         val content = try {
             okHttpClient.newCall(request).execute().body?.string()
@@ -65,7 +66,7 @@ class ThumbnailOfUrlDataFetcher(
     }
 
     private fun getThumbnailUrlOfHost(): String {
-        val host = Uri.parse(model).host
+        val host = Uri.parse(model.url).host
         return "https://api.faviconkit.com/${host}/128"
     }
 }

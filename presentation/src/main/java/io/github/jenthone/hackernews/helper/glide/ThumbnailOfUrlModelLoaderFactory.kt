@@ -5,10 +5,10 @@ import com.bumptech.glide.load.model.ModelLoaderFactory
 import com.bumptech.glide.load.model.MultiModelLoaderFactory
 import java.io.InputStream
 
-class ThumbnailOfUrlModelLoaderFactory : ModelLoaderFactory<String, InputStream> {
+class ThumbnailOfUrlModelLoaderFactory : ModelLoaderFactory<ThumbnailUrlRequest, InputStream> {
     override fun build(
         multiFactory: MultiModelLoaderFactory
-    ): ModelLoader<String, InputStream> = ThumbnailOfUrlModelLoader()
+    ): ModelLoader<ThumbnailUrlRequest, InputStream> = ThumbnailOfUrlModelLoader()
 
     override fun teardown() = Unit
 }
