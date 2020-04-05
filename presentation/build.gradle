@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
@@ -64,4 +65,10 @@ dependencies {
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
 
     implementation "io.coil-kt:coil:0.9.5"
+
+    def glide_version = "4.11.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    implementation 'org.jsoup:jsoup:1.13.1'
 }
