@@ -32,37 +32,43 @@ class ThumbnailOfUrlDataFetcher(
         // TODO: Cancel network request.
     }
 
-    override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) {
+    override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) =
+        try {
+            val inputStream = loadDatInternal()
+            callback.onDataReady(inputStream)
+        } catch (e: Exception) {
+            callback.onLoadFailed(e)
+        }
+
+    private fun loadDatInternal(): InputStream {
         val url = model.url
+        val content = loadHtmlContentFromUrl(url)
+        val urlThumbnail = getUrlThumbnailFromOgTag(content) ?: getThumbnailUrlOfHost()
+        return openInputStreamForUrl(urlThumbnail)
+    }
+
+    private fun openInputStreamForUrl(url: String): InputStream {
+        val requestUrlThumbnail = Request.Builder()
+            .url(url)
+            .build()
+        return okHttpClient.newCall(requestUrlThumbnail)
+            .execute()
+            .body?.byteStream()
+            ?: throw DataNotFoundException()
+    }
+
+    private fun loadHtmlContentFromUrl(url: String): String {
         val request = Request.Builder()
             .url(url)
             .build()
-        val content = try {
-            okHttpClient.newCall(request).execute().body?.string()
-                ?: throw DataNotFoundException()
-        } catch (e: Exception) {
-            callback.onLoadFailed(e)
-            return
-        }
+        return okHttpClient.newCall(request).execute().body?.string()
+            ?: throw DataNotFoundException()
+    }
 
-        val doc = Jsoup.parse(content)
+    private fun getUrlThumbnailFromOgTag(htmlContent: String): String? {
+        val doc = Jsoup.parse(htmlContent)
         val metaOgImage = doc.select("meta[property=og:image]")
-        val urlThumbnailFromOgTag = metaOgImage?.attr("content")
-        val urlThumbnail = urlThumbnailFromOgTag ?: getThumbnailUrlOfHost()
-
-        val requestUrlThumbnail = Request.Builder()
-            .url(urlThumbnail)
-            .build()
-        val inputStream = try {
-            okHttpClient.newCall(requestUrlThumbnail)
-                .execute()
-                .body?.byteStream()
-                ?: throw DataNotFoundException()
-        } catch (e: Exception) {
-            callback.onLoadFailed(e)
-            return
-        }
-        callback.onDataReady(inputStream)
+        return metaOgImage?.attr("content")
     }
 
     private fun getThumbnailUrlOfHost(): String {
