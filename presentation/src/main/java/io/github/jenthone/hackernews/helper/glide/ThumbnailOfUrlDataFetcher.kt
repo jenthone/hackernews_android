@@ -30,16 +30,16 @@ class ThumbnailOfUrlDataFetcher(
 
     override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) =
         try {
-            val inputStream = loadDatInternal()
+            val inputStream = loadDataInternal()
             callback.onDataReady(inputStream)
         } catch (e: Exception) {
             callback.onLoadFailed(e)
         }
 
-    private fun loadDatInternal(): InputStream {
+    private fun loadDataInternal(): InputStream {
         val url = model.url
         val content = loadHtmlContentFromUrl(url)
-        val urlThumbnail = getUrlThumbnailFromOgTag(content) ?: getThumbnailUrlOfHost()
+        val urlThumbnail = parseUrlThumbnailFromHtmlContent(content) ?: getThumbnailUrlFromHost()
         return openInputStreamForUrl(urlThumbnail)
     }
 
@@ -59,13 +59,16 @@ class ThumbnailOfUrlDataFetcher(
             ?: throw DataNotFoundException()
     }
 
-    private fun getUrlThumbnailFromOgTag(htmlContent: String): String? {
+    /**
+     * Parses url thumbnail by select meta attributes of html `og` tag.
+     */
+    private fun parseUrlThumbnailFromHtmlContent(htmlContent: String): String? {
         val doc = Jsoup.parse(htmlContent)
         val metaOgImage = doc.select("meta[property=og:image]")
         return metaOgImage?.attr("content")?.takeIf(String::isNotBlank)
     }
 
-    private fun getThumbnailUrlOfHost(): String {
+    private fun getThumbnailUrlFromHost(): String {
         val host = Uri.parse(model.url).host
         return "https://api.faviconkit.com/${host}/128"
     }
