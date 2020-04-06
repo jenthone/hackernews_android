@@ -22,15 +22,11 @@ class ThumbnailOfUrlDataFetcher(
 
     override fun getDataClass(): Class<InputStream> = InputStream::class.java
 
-    override fun cleanup() {
-        // TODO: Release/clean all network request.
-    }
+    override fun cleanup() = Unit
 
     override fun getDataSource(): DataSource = DataSource.REMOTE
 
-    override fun cancel() {
-        // TODO: Cancel network request.
-    }
+    override fun cancel() = Unit
 
     override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) =
         try {
@@ -51,9 +47,7 @@ class ThumbnailOfUrlDataFetcher(
         val requestUrlThumbnail = Request.Builder()
             .url(url)
             .build()
-        return okHttpClient.newCall(requestUrlThumbnail)
-            .execute()
-            .body?.byteStream()
+        return okHttpClient.newCall(requestUrlThumbnail).execute().body?.byteStream()
             ?: throw DataNotFoundException()
     }
 
@@ -68,7 +62,7 @@ class ThumbnailOfUrlDataFetcher(
     private fun getUrlThumbnailFromOgTag(htmlContent: String): String? {
         val doc = Jsoup.parse(htmlContent)
         val metaOgImage = doc.select("meta[property=og:image]")
-        return metaOgImage?.attr("content")
+        return metaOgImage?.attr("content")?.takeIf(String::isNotBlank)
     }
 
     private fun getThumbnailUrlOfHost(): String {
