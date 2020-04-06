@@ -15,7 +15,7 @@ import java.io.InputStream
  * A data fetcher for load thumbnail image from the given url.
  */
 class ThumbnailOfUrlDataFetcher(
-    private val model: ThumbnailUrlRequest
+    private val model: ThumbnailOfUrlRequest
 ) : DataFetcher<InputStream> {
 
     private val okHttpClient: OkHttpClient by inject(OkHttpClient::class.java)

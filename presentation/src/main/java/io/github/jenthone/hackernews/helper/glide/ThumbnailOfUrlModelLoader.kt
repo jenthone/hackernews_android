@@ -10,14 +10,14 @@ import java.io.InputStream
 /**
  * A custom model loader to load a thumbnail image from given url.
  */
-class ThumbnailOfUrlModelLoader : ModelLoader<ThumbnailUrlRequest, InputStream> {
+class ThumbnailOfUrlModelLoader : ModelLoader<ThumbnailOfUrlRequest, InputStream> {
     override fun buildLoadData(
-        model: ThumbnailUrlRequest,
+        model: ThumbnailOfUrlRequest,
         width: Int,
         height: Int,
         options: Options
     ): LoadData<InputStream>? =
         LoadData(ObjectKey(model), ThumbnailOfUrlDataFetcher(model))
 
-    override fun handles(model: ThumbnailUrlRequest): Boolean = URLUtil.isValidUrl(model.url)
+    override fun handles(model: ThumbnailOfUrlRequest): Boolean = URLUtil.isValidUrl(model.url)
 }
