@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.entity.Item
-import io.github.jenthone.hackernews.helper.glide.ThumbnailUrlRequest
+import io.github.jenthone.hackernews.helper.glide.loadThumbnail
 import io.github.jenthone.hackernews.helper.timeFormat
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_story.*
@@ -87,9 +86,7 @@ class StoryViewHolder(override val containerView: View) :
             tvUrl.text = Uri.parse(it).host
         }
 
-        Glide.with(imvThumbnail)
-            .load(ThumbnailUrlRequest(item.url.orEmpty()))
-            .into(imvThumbnail)
+        imvThumbnail.loadThumbnail(item.url.orEmpty())
 
         tvTime.isVisible = item.time != null
         item.time?.let {

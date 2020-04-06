@@ -15,7 +15,7 @@ class HackerNewsGlideModule : AppGlideModule() {
         registry: Registry
     ) {
         registry.prepend(
-            ThumbnailUrlRequest::class.java,
+            ThumbnailOfUrlRequest::class.java,
             InputStream::class.java,
             ThumbnailOfUrlModelLoaderFactory()
         )
