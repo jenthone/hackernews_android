@@ -22,50 +22,53 @@ class ThumbnailOfUrlDataFetcher(
 
     override fun getDataClass(): Class<InputStream> = InputStream::class.java
 
-    override fun cleanup() {
-        // TODO: Release/clean all network request.
-    }
+    override fun cleanup() = Unit
 
     override fun getDataSource(): DataSource = DataSource.REMOTE
 
-    override fun cancel() {
-        // TODO: Cancel network request.
+    override fun cancel() = Unit
+
+    override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) =
+        try {
+            val inputStream = loadDataInternal()
+            callback.onDataReady(inputStream)
+        } catch (e: Exception) {
+            callback.onLoadFailed(e)
+        }
+
+    private fun loadDataInternal(): InputStream {
+        val url = model.url
+        val content = loadHtmlContentFromUrl(url)
+        val urlThumbnail = parseUrlThumbnailFromHtmlContent(content) ?: getThumbnailUrlFromHost()
+        return openInputStreamForUrl(urlThumbnail)
     }
 
-    override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) {
-        val url = model.url
+    private fun openInputStreamForUrl(url: String): InputStream {
+        val requestUrlThumbnail = Request.Builder()
+            .url(url)
+            .build()
+        return okHttpClient.newCall(requestUrlThumbnail).execute().body?.byteStream()
+            ?: throw DataNotFoundException()
+    }
+
+    private fun loadHtmlContentFromUrl(url: String): String {
         val request = Request.Builder()
             .url(url)
             .build()
-        val content = try {
-            okHttpClient.newCall(request).execute().body?.string()
-                ?: throw DataNotFoundException()
-        } catch (e: Exception) {
-            callback.onLoadFailed(e)
-            return
-        }
-
-        val doc = Jsoup.parse(content)
-        val metaOgImage = doc.select("meta[property=og:image]")
-        val urlThumbnailFromOgTag = metaOgImage?.attr("content")
-        val urlThumbnail = urlThumbnailFromOgTag ?: getThumbnailUrlOfHost()
-
-        val requestUrlThumbnail = Request.Builder()
-            .url(urlThumbnail)
-            .build()
-        val inputStream = try {
-            okHttpClient.newCall(requestUrlThumbnail)
-                .execute()
-                .body?.byteStream()
-                ?: throw DataNotFoundException()
-        } catch (e: Exception) {
-            callback.onLoadFailed(e)
-            return
-        }
-        callback.onDataReady(inputStream)
+        return okHttpClient.newCall(request).execute().body?.string()
+            ?: throw DataNotFoundException()
     }
 
-    private fun getThumbnailUrlOfHost(): String {
+    /**
+     * Parses url thumbnail by select meta attributes of html `og` tag.
+     */
+    private fun parseUrlThumbnailFromHtmlContent(htmlContent: String): String? {
+        val doc = Jsoup.parse(htmlContent)
+        val metaOgImage = doc.select("meta[property=og:image]")
+        return metaOgImage?.attr("content")?.takeIf(String::isNotBlank)
+    }
+
+    private fun getThumbnailUrlFromHost(): String {
         val host = Uri.parse(model.url).host
         return "https://api.faviconkit.com/${host}/128"
     }
