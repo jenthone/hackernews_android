@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.jenthone.hackernews.R
+import io.github.jenthone.hackernews.data.helper.glide.loadThumbnail
 import io.github.jenthone.hackernews.entity.Item
-import io.github.jenthone.hackernews.helper.glide.loadThumbnail
 import io.github.jenthone.hackernews.helper.timeFormat
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_story.*

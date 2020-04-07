@@ -1,4 +1,4 @@
-package io.github.jenthone.hackernews.helper.glide
+package io.github.jenthone.hackernews.data.helper.glide
 
 /**
  * A data class represents a glide request to load thumbnail image of an website with the

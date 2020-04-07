@@ -1,4 +1,4 @@
-package io.github.jenthone.hackernews.helper.glide
+package io.github.jenthone.hackernews.data.helper.glide
 
 import com.bumptech.glide.load.model.ModelLoader
 import com.bumptech.glide.load.model.ModelLoaderFactory

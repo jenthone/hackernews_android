@@ -1,4 +1,4 @@
-package io.github.jenthone.hackernews.helper.glide
+package io.github.jenthone.hackernews.data.helper.glide
 
 import android.net.Uri
 import com.bumptech.glide.Priority
@@ -7,6 +7,8 @@ import com.bumptech.glide.load.data.DataFetcher
 import io.github.jenthone.hackernews.domain.helper.exception.DataNotFoundException
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.ResponseBody
+import okhttp3.internal.closeQuietly
 import org.jsoup.Jsoup
 import org.koin.java.KoinJavaComponent.inject
 import java.io.InputStream
@@ -47,6 +49,7 @@ class ThumbnailOfUrlDataFetcher(
         val requestUrlThumbnail = Request.Builder()
             .url(url)
             .build()
+
         return okHttpClient.newCall(requestUrlThumbnail).execute().body?.byteStream()
             ?: throw DataNotFoundException()
     }

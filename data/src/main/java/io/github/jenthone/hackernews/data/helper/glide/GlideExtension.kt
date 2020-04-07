@@ -1,4 +1,4 @@
-package io.github.jenthone.hackernews.helper.glide
+package io.github.jenthone.hackernews.data.helper.glide
 
 import android.widget.ImageView
 
@@ -11,6 +11,6 @@ fun ImageView.load(request: Any, builder: GlideRequest<*>.() -> Unit = {}) {
 
 fun ImageView.loadThumbnail(url: String) {
     load(ThumbnailOfUrlRequest(url)) {
-        centerCrop()
+        centerInside()
     }
 }

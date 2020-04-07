@@ -1,4 +1,4 @@
-package io.github.jenthone.hackernews.helper.glide
+package io.github.jenthone.hackernews.data.helper.glide
 
 import android.webkit.URLUtil
 import com.bumptech.glide.load.Options
