@@ -86,7 +86,7 @@ class StoryViewHolder(override val containerView: View) :
             tvUrl.text = Uri.parse(it).host
         }
 
-        imvThumbnail.loadThumbnail(item.url.orEmpty())
+        imvThumbnail.loadThumbnail(item.url.orEmpty(), R.mipmap.ic_launcher)
 
         tvTime.isVisible = item.time != null
         item.time?.let {
