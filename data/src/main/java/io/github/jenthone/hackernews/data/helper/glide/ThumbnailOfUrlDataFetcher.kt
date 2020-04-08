@@ -4,14 +4,9 @@ import android.net.Uri
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.data.DataFetcher
-import io.github.jenthone.hackernews.domain.helper.exception.DataNotFoundException
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.ResponseBody
-import okhttp3.internal.closeQuietly
 import org.jsoup.Jsoup
-import org.koin.java.KoinJavaComponent.inject
 import java.io.InputStream
+import java.net.URL
 
 /**
  * A data fetcher for load thumbnail image from the given url.
@@ -19,8 +14,6 @@ import java.io.InputStream
 class ThumbnailOfUrlDataFetcher(
     private val model: ThumbnailOfUrlRequest
 ) : DataFetcher<InputStream> {
-
-    private val okHttpClient: OkHttpClient by inject(OkHttpClient::class.java)
 
     override fun getDataClass(): Class<InputStream> = InputStream::class.java
 
@@ -40,39 +33,25 @@ class ThumbnailOfUrlDataFetcher(
 
     private fun loadDataInternal(): InputStream {
         val url = model.url
-        val content = loadHtmlContentFromUrl(url)
-        val urlThumbnail = parseUrlThumbnailFromHtmlContent(content) ?: getThumbnailUrlFromHost()
+        val urlThumbnail = parseUrlThumbnailFromHtmlContent(url) ?: defaultThumbnailOf(url)
         return openInputStreamForUrl(urlThumbnail)
     }
 
     private fun openInputStreamForUrl(url: String): InputStream {
-        val requestUrlThumbnail = Request.Builder()
-            .url(url)
-            .build()
-
-        return okHttpClient.newCall(requestUrlThumbnail).execute().body?.byteStream()
-            ?: throw DataNotFoundException()
-    }
-
-    private fun loadHtmlContentFromUrl(url: String): String {
-        val request = Request.Builder()
-            .url(url)
-            .build()
-        return okHttpClient.newCall(request).execute().body?.string()
-            ?: throw DataNotFoundException()
+        return URL(url).openStream()
     }
 
     /**
      * Parses url thumbnail by select meta attributes of html `og` tag.
      */
-    private fun parseUrlThumbnailFromHtmlContent(htmlContent: String): String? {
-        val doc = Jsoup.parse(htmlContent)
-        val metaOgImage = doc.select("meta[property=og:image]")
+    private fun parseUrlThumbnailFromHtmlContent(url: String): String? {
+        val doc = Jsoup.connect(url).get()
+        val metaOgImage = doc?.select("meta[property=og:image]")
         return metaOgImage?.attr("content")?.takeIf(String::isNotBlank)
     }
 
-    private fun getThumbnailUrlFromHost(): String {
-        val host = Uri.parse(model.url).host
+    private fun defaultThumbnailOf(url: String): String {
+        val host = Uri.parse(url).host
         return "https://api.faviconkit.com/${host}/128"
     }
 }
