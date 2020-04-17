@@ -2,17 +2,19 @@ package io.github.jenthone.hackernews.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.github.jenthone.hackernews.R
+import io.github.jenthone.hackernews.databinding.ActivityMainBinding
+import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.ui.story.StoryPagerAdapter
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var adapter: StoryPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initViews()
     }
@@ -21,7 +23,10 @@ class MainActivity : AppCompatActivity() {
         adapter = StoryPagerAdapter(
             supportFragmentManager
         )
-        vpMain.adapter = adapter
-        tlMain.setupWithViewPager(vpMain)
+        with(binding) {
+            vpMain.adapter = adapter
+            vpMain.offscreenPageLimit = StoryType.values().size
+            tlMain.setupWithViewPager(vpMain)
+        }
     }
 }

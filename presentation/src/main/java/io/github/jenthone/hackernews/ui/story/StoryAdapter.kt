@@ -8,10 +8,10 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.data.helper.glide.loadThumbnail
+import io.github.jenthone.hackernews.databinding.ItemStoryBinding
+import io.github.jenthone.hackernews.databinding.ItemStoryEmptyBinding
 import io.github.jenthone.hackernews.entity.Item
 import io.github.jenthone.hackernews.helper.timeFormat
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_story.*
 
 class StoryAdapter(
     private val ids: List<Int>,
@@ -63,66 +63,64 @@ class StoryAdapter(
     }
 }
 
-class StoryViewHolder(override val containerView: View) :
-    RecyclerView.ViewHolder(containerView),
-    LayoutContainer {
+class StoryViewHolder(private val binding: ItemStoryBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     companion object {
         fun create(parent: ViewGroup): StoryViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_story, parent, false)
-            return StoryViewHolder(view)
+            val binding =
+                ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return StoryViewHolder(binding)
         }
     }
 
     fun bind(item: Item?, listener: StoryAdapterListener) {
         item ?: return
 
-        tvTitle.text = item.title
+        binding.tvTitle.text = item.title
 
-        tvBy.text = item.by
+        binding.tvBy.text = item.by
 
-        tvUrl.isVisible = item.url != null
+        binding.tvUrl.isVisible = item.url != null
         item.url?.let {
-            tvUrl.text = Uri.parse(it).host
+            binding.tvUrl.text = Uri.parse(it).host
         }
 
-        imvThumbnail.loadThumbnail(item.url.orEmpty(), R.mipmap.ic_launcher)
+        binding.imvThumbnail.loadThumbnail(item.url.orEmpty(), R.mipmap.ic_launcher)
 
-        tvTime.isVisible = item.time != null
+        binding.tvTime.isVisible = item.time != null
         item.time?.let {
-            tvTime.text = it.timeFormat()
+            binding.tvTime.text = it.timeFormat()
         }
 
-        tvUrl.setOnClickListener {
+        binding.tvUrl.setOnClickListener {
             listener.onOpenItemUrl(item)
         }
 
-        imvThumbnail.setOnClickListener {
+        binding.imvThumbnail.setOnClickListener {
             listener.onOpenItemUrl(item)
         }
 
-        tvBy.setOnClickListener {
+        binding.tvBy.setOnClickListener {
             listener.onOpenItemCreator(item)
         }
 
         val score = item.score ?: 0
-        tvScore.text = "$score"
+        binding.tvScore.text = "$score"
 
         val descendants = item.descendants ?: 0
 
-        tvComment.isVisible = descendants > 0
-        tvComment.text = "$descendants"
+        binding.tvComment.isVisible = descendants > 0
+        binding.tvComment.text = "$descendants"
     }
 }
 
-class StoryEmptyViewHolder(override val containerView: View) :
-    RecyclerView.ViewHolder(containerView),
-    LayoutContainer {
+class StoryEmptyViewHolder(private val binding: ItemStoryEmptyBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     companion object {
         fun create(parent: ViewGroup): StoryEmptyViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_story_empty, parent, false)
-            return StoryEmptyViewHolder(view)
+            val binding =
+                ItemStoryEmptyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return StoryEmptyViewHolder(binding)
         }
     }
 
