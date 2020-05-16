@@ -11,11 +11,11 @@ import io.github.jenthone.hackernews.data.service.ItemService
 import io.github.jenthone.hackernews.data.service.StoryService
 import io.github.jenthone.hackernews.domain.repository.ItemRepository
 import io.github.jenthone.hackernews.domain.repository.StoryRepository
+import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
 
 val dataModule = module {
     single {
