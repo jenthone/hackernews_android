@@ -1,16 +1,14 @@
 package io.github.jenthone.hackernews.ui.story
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-
-import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.data.Const
+import io.github.jenthone.hackernews.databinding.FragmentStoryBinding
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.entity.Item
@@ -18,7 +16,6 @@ import io.github.jenthone.hackernews.helper.observe
 import io.github.jenthone.hackernews.helper.openLink
 import io.github.jenthone.hackernews.mapper.toPresentation
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
-import kotlinx.android.synthetic.main.fragment_story.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -31,6 +28,9 @@ class StoryFragment : Fragment() {
                 }
             }
     }
+
+    private var binding: FragmentStoryBinding? = null
+    private val requireBinding get() = requireNotNull(binding)
 
     private val vmItem by viewModel<ItemViewModel>()
 
@@ -45,10 +45,12 @@ class StoryFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_story, container, false)
+        binding = FragmentStoryBinding.inflate(inflater, container, false)
+        return requireBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,19 +62,31 @@ class StoryFragment : Fragment() {
         fetchData()
     }
 
-    private fun initViews() {
-        rcvItem.layoutManager = LinearLayoutManager(context)
-        rcvItem.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        rcvItem.setHasFixedSize(true)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 
-        srlItem.setOnRefreshListener {
-            fetchData()
+    private fun initViews() {
+        with(requireBinding) {
+            rcvItem.layoutManager = LinearLayoutManager(context)
+            rcvItem.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            rcvItem.setHasFixedSize(true)
+
+            srlItem.setOnRefreshListener {
+                fetchData()
+            }
         }
     }
 
     private fun initViewModels() {
         vmItem.liveResultStories.observe(viewLifecycleOwner) { result ->
-            srlItem.isRefreshing = false
+            requireBinding.srlItem.isRefreshing = false
             when (result) {
                 is AsyncResult.Success -> {
                     Timber.d(result.data.toString())
@@ -87,7 +101,7 @@ class StoryFragment : Fragment() {
         vmItem.liveResultItem.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is AsyncResult.Success -> {
-                    rcvItem.post {
+                    requireBinding.rcvItem.post {
                         adapter.notify(result.data.toPresentation())
                     }
                 }
@@ -110,7 +124,7 @@ class StoryFragment : Fragment() {
             }
         })
 
-        rcvItem.adapter = adapter
+        requireBinding.rcvItem.adapter = adapter
     }
 
     private fun fetchData() {

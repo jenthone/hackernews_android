@@ -76,7 +76,6 @@ abstract class EndlessAdapter(protected val items: MutableList<Any> = mutableLis
         }
 
         fun bind() {
-
         }
     }
 
