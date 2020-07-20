@@ -46,11 +46,6 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
     api "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
-    def koin_version = "2.1.5"
-    api "org.koin:koin-android:$koin_version"
-    api "org.koin:koin-androidx-scope:$koin_version"
-    api "org.koin:koin-androidx-viewmodel:$koin_version"
-
     def moshi_version = "1.9.2"
     api "com.squareup.moshi:moshi:$moshi_version"
     api "com.squareup.moshi:moshi-kotlin:$moshi_version"

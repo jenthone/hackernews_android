@@ -11,6 +11,10 @@ fun Int.timeFormat(): String {
     return t.format(Date(this * 1000L))
 }
 
-fun <T> LiveData<T>.observe(owner: LifecycleOwner, action: (T) -> Unit) {
-    observe(owner, Observer { action(it) })
+fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, action: (T) -> Unit) {
+    observe(owner, Observer {
+        if (it != null) {
+            action(it)
+        }
+    })
 }

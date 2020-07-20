@@ -3,8 +3,10 @@ package io.github.jenthone.hackernews.ui.story
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.github.jenthone.hackernews.R
+import io.github.jenthone.hackernews.data.helper.glide.loadThumbnail
 import io.github.jenthone.hackernews.databinding.ItemStoryBinding
 import io.github.jenthone.hackernews.databinding.ItemStoryEmptyBinding
 import io.github.jenthone.hackernews.entity.Item

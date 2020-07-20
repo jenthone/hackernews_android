@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jenthone.hackernews.databinding.ActivityMainBinding
+import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.ui.story.StoryPagerAdapter
 
 @AndroidEntryPoint

@@ -5,16 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.jenthone.hackernews.data.Const
 import io.github.jenthone.hackernews.databinding.FragmentStoryBinding
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.entity.Item
+import io.github.jenthone.hackernews.helper.observeNonNull
 import io.github.jenthone.hackernews.helper.openLink
+import io.github.jenthone.hackernews.mapper.toPresentation
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+@AndroidEntryPoint
 class StoryFragment : Fragment() {
     companion object {
         fun newInstance(type: String) = StoryFragment()
@@ -28,7 +34,7 @@ class StoryFragment : Fragment() {
     private var binding: FragmentStoryBinding? = null
     private val requireBinding get() = requireNotNull(binding)
 
-    private val vmItem by viewModel<ItemViewModel>()
+    private val vmItem: ItemViewModel by viewModels()
 
     private lateinit var adapter: StoryAdapter
 
@@ -81,7 +87,7 @@ class StoryFragment : Fragment() {
     }
 
     private fun initViewModels() {
-        vmItem.liveResultStories.observe(viewLifecycleOwner) { result ->
+        vmItem.liveResultStories.observeNonNull(viewLifecycleOwner) { result ->
             requireBinding.srlItem.isRefreshing = false
             when (result) {
                 is AsyncResult.Success -> {
@@ -94,7 +100,7 @@ class StoryFragment : Fragment() {
             }
         }
 
-        vmItem.liveResultItem.observe(viewLifecycleOwner) { result ->
+        vmItem.liveResultItem.observeNonNull(viewLifecycleOwner) { result ->
             when (result) {
                 is AsyncResult.Success -> {
                     requireBinding.rcvItem.post {

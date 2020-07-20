@@ -15,7 +15,7 @@ Simple Hacker News app implement in Android using Clean Architecture and Android
     - [Timber](https://github.com/JakeWharton/timber) - A logger with a small, extensible API which provides utility on top of Android's normal Log class.
     - [Leak Canary](https://github.com/square/leakcanary) - A memory leak detection library for Android
 - [Dependency Injection]
-    - [Koin](https://github.com/InsertKoinIO/koin) - A pragmatic lightweight dependency injection framework for Kotlin.
+    - [hilt-android](https://developer.android.com/training/dependency-injection/hilt-android) - Hilt is a dependency injection library for Android that reduces the boilerplate of doing manual dependency injection in your project.
 - [Data]
     - [Retrofit](https://github.com/square/retrofit) - Type-safe HTTP client for Android and Java by Square, Inc.
     - [Moshi](https://github.com/square/moshi) - A modern JSON library for Kotlin and Java.
