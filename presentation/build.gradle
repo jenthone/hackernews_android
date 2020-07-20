@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -62,4 +64,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+
+    def hilt_version = "2.28-alpha"
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+    def hilt_viewmodel_version = "1.0.0-alpha01"
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodel_version")
+    kapt("androidx.hilt:hilt-compiler:$hilt_viewmodel_version")
 }
