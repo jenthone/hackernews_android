@@ -2,10 +2,14 @@ package io.github.jenthone.hackernews.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
+import io.github.jenthone.hackernews.R
+import kotlinx.android.synthetic.main.activity_main.*
 import io.github.jenthone.hackernews.databinding.ActivityMainBinding
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.ui.story.StoryPagerAdapter
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 

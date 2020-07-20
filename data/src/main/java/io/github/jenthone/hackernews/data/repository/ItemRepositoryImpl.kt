@@ -9,8 +9,9 @@ import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.domain.helper.exception.DataNotFoundException
 import io.github.jenthone.hackernews.domain.repository.ItemRepository
+import javax.inject.Inject
 
-class ItemRepositoryImpl(
+class ItemRepositoryImpl @Inject constructor(
     private val service: ItemService,
     private val itemDao: ItemDao
 ) :

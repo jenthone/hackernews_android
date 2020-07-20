@@ -63,6 +63,8 @@ dependencies {
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
+
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
 
     def hilt_version = "2.28-alpha"

@@ -1,5 +1,9 @@
 package io.github.jenthone.hackernews.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.*
 import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.domain.entity.StoryType
@@ -8,7 +12,7 @@ import io.github.jenthone.hackernews.domain.repository.ItemRepository
 import io.github.jenthone.hackernews.domain.repository.StoryRepository
 import kotlinx.coroutines.launch
 
-class ItemViewModel(
+class ItemViewModel @ViewModelInject constructor(
     private val itemRepository: ItemRepository,
     private val storyRepository: StoryRepository
 ) : ViewModel() {

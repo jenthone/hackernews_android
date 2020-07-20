@@ -1,13 +1,10 @@
 package io.github.jenthone.hackernews
 
 import android.app.Application
-import android.content.Context
+import dagger.hilt.android.HiltAndroidApp
 import io.github.jenthone.hackernews.data.helper.attachToDebugger
-import io.github.jenthone.hackernews.di.diModules
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 
+@HiltAndroidApp
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -15,14 +12,5 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             attachToDebugger()
         }
-
-        startKoin {
-            androidLogger()
-            androidContext(this@App)
-            modules(diModules)
-        }
     }
 }
-
-val Context.app: App
-    get() = applicationContext as App

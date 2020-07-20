@@ -6,8 +6,11 @@ import io.github.jenthone.hackernews.data.service.StoryService
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.domain.repository.StoryRepository
+import javax.inject.Inject
 
-class StoryRepositoryImpl(private val service: StoryService) : StoryRepository {
+class StoryRepositoryImpl @Inject constructor(
+    private val service: StoryService
+) : StoryRepository {
     override suspend fun fetchStories(type: StoryType): AsyncResult<List<Int>> {
         return safeResult { service.fetchStories(type.toData()).take(30) }
     }
