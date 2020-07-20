@@ -5,16 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.jenthone.hackernews.data.Const
 import io.github.jenthone.hackernews.databinding.FragmentStoryBinding
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.entity.Item
-import io.github.jenthone.hackernews.helper.observe
 import io.github.jenthone.hackernews.helper.openLink
-import io.github.jenthone.hackernews.mapper.toPresentation
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

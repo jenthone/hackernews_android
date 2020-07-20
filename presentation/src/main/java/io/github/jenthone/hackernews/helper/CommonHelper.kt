@@ -3,8 +3,8 @@ package io.github.jenthone.hackernews.helper
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import java.util.*
 import org.ocpsoft.prettytime.PrettyTime
+import java.util.*
 
 fun Int.timeFormat(): String {
     val t = PrettyTime()
