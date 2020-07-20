@@ -33,16 +33,16 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.core:core-ktx:1.3.0'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    def okhttp_version = "4.2.1"
+    def okhttp_version = "4.7.2"
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
     api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
-    def retrofit_version = "2.6.2"
+    def retrofit_version = "2.9.0"
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
     api "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
@@ -61,9 +61,9 @@ dependencies {
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
-    def pandora_version = "2.0.6"
+    def pandora_version = "2.1.0"
     def pandora_op_version = "2.0.3"
-    debugImplementation "com.github.whataa:pandora:androidx_v$pandora_version"
+    debugImplementation "com.github.whataa:pandora:$pandora_version"
     releaseImplementation "com.github.whataa:pandora-no-op:v$pandora_op_version"
 
     def timber_version = "4.7.1"
