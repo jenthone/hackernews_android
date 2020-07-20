@@ -16,7 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ApplicationComponent::class)
 object DataModule {
-
     @Provides
     @Singleton
     fun provideAppDatabase(
@@ -28,7 +27,6 @@ object DataModule {
     fun provideItemDao(
         appDatabase: AppDatabase
     ): ItemDao = appDatabase.itemDao()
-
 
     @Provides
     @Singleton

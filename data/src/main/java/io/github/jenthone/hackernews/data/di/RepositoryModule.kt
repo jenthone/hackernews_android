@@ -13,7 +13,6 @@ import io.github.jenthone.hackernews.domain.repository.StoryRepository
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 abstract class RepositoryModule {
-
     @Binds
     @ActivityRetainedScoped
     abstract fun provideItemRepository(

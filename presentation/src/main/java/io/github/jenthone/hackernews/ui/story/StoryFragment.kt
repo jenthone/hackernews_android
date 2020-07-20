@@ -14,7 +14,7 @@ import io.github.jenthone.hackernews.databinding.FragmentStoryBinding
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.entity.Item
-import io.github.jenthone.hackernews.helper.observeNonNull
+import io.github.jenthone.hackernews.helper.observeNotNull
 import io.github.jenthone.hackernews.helper.openLink
 import io.github.jenthone.hackernews.mapper.toPresentation
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
@@ -87,7 +87,7 @@ class StoryFragment : Fragment() {
     }
 
     private fun initViewModels() {
-        vmItem.liveResultStories.observeNonNull(viewLifecycleOwner) { result ->
+        vmItem.liveResultStories.observeNotNull(viewLifecycleOwner) { result ->
             requireBinding.srlItem.isRefreshing = false
             when (result) {
                 is AsyncResult.Success -> {
@@ -100,7 +100,7 @@ class StoryFragment : Fragment() {
             }
         }
 
-        vmItem.liveResultItem.observeNonNull(viewLifecycleOwner) { result ->
+        vmItem.liveResultItem.observeNotNull(viewLifecycleOwner) { result ->
             when (result) {
                 is AsyncResult.Success -> {
                     requireBinding.rcvItem.post {
