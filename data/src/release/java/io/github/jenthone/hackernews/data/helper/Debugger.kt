@@ -5,6 +5,6 @@ import okhttp3.OkHttpClient
 
 fun Application.attachToDebugger() = Unit
 
-fun Application.openDebugger()  = Unit
+fun Application.openDebugger() = Unit
 
 fun OkHttpClient.Builder.attachToDebugger() = Unit
