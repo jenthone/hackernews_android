@@ -2,9 +2,8 @@ package io.github.jenthone.hackernews.helper
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import org.ocpsoft.prettytime.PrettyTime
-import java.util.*
+import java.util.Date
 
 fun Int.timeFormat(): String {
     val t = PrettyTime()
@@ -12,5 +11,5 @@ fun Int.timeFormat(): String {
 }
 
 fun <T> LiveData<T>.observeNotNull(owner: LifecycleOwner, action: (T) -> Unit) {
-    observe(owner, Observer { it?.let(action) })
+    observe(owner, { it?.let(action) })
 }

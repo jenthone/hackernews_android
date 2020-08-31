@@ -19,9 +19,11 @@ fun Application.openDebugger() {
 
 fun OkHttpClient.Builder.attachToDebugger() {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
-    addInterceptor(httpLoggingInterceptor.apply {
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    })
+    addInterceptor(
+        httpLoggingInterceptor.apply {
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        }
+    )
     addNetworkInterceptor(StethoInterceptor())
     addInterceptor(Pandora.get().interceptor)
 }

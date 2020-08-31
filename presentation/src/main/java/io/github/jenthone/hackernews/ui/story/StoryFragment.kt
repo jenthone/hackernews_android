@@ -112,19 +112,22 @@ class StoryFragment : Fragment() {
     }
 
     private fun initAdapter(ids: List<Int>) {
-        adapter = StoryAdapter(ids, listener = object : StoryAdapterListener {
-            override fun onBindEmptyItem(id: Int) {
-                vmItem.fetchItem(id)
-            }
+        adapter = StoryAdapter(
+            ids,
+            listener = object : StoryAdapterListener {
+                override fun onBindEmptyItem(id: Int) {
+                    vmItem.fetchItem(id)
+                }
 
-            override fun onOpenItemUrl(item: Item) {
-                context?.openLink(item.url ?: return)
-            }
+                override fun onOpenItemUrl(item: Item) {
+                    context?.openLink(item.url ?: return)
+                }
 
-            override fun onOpenItemCreator(item: Item) {
-                context?.openLink("${Const.BASE_WEB_URL}user?id=${item.by}")
+                override fun onOpenItemCreator(item: Item) {
+                    context?.openLink("${Const.BASE_WEB_URL}user?id=${item.by}")
+                }
             }
-        })
+        )
 
         requireBinding.rcvItem.adapter = adapter
     }

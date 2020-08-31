@@ -2,8 +2,8 @@ package io.github.jenthone.hackernews.data.helper.glide
 
 import android.webkit.URLUtil
 import com.bumptech.glide.load.Options
-import com.bumptech.glide.load.model.ModelLoader.LoadData
 import com.bumptech.glide.load.model.ModelLoader
+import com.bumptech.glide.load.model.ModelLoader.LoadData
 import com.bumptech.glide.signature.ObjectKey
 import java.io.InputStream
 

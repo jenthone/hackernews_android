@@ -1,6 +1,6 @@
 package io.github.jenthone.hackernews.data
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
