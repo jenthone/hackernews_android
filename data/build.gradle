@@ -32,13 +32,13 @@ dependencies {
     implementation project(':domain')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.core:core-ktx:$core_ktx_version"
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "androidx.test.ext:junit:$junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 
-    def okhttp_version = "4.7.2"
+    def okhttp_version = "4.8.1"
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
     api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
@@ -46,7 +46,7 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
     api "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
-    def moshi_version = "1.9.2"
+    def moshi_version = "1.9.3"
     api "com.squareup.moshi:moshi:$moshi_version"
     api "com.squareup.moshi:moshi-kotlin:$moshi_version"
     api "com.squareup.moshi:moshi-adapters:$moshi_version"
@@ -57,9 +57,7 @@ dependencies {
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
     def pandora_version = "2.1.0"
-    def pandora_op_version = "2.0.3"
     debugImplementation "com.github.whataa:pandora:$pandora_version"
-    releaseImplementation "com.github.whataa:pandora-no-op:v$pandora_op_version"
 
     def timber_version = "4.7.1"
     api "com.jakewharton.timber:timber:$timber_version"
