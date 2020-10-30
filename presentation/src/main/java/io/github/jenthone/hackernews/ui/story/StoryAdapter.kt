@@ -9,7 +9,7 @@ import io.github.jenthone.hackernews.R
 import io.github.jenthone.hackernews.data.helper.glide.loadThumbnail
 import io.github.jenthone.hackernews.databinding.ItemStoryBinding
 import io.github.jenthone.hackernews.databinding.ItemStoryEmptyBinding
-import io.github.jenthone.hackernews.entity.Item
+import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.helper.timeFormat
 
 class StoryAdapter(

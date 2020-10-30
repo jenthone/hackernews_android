@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jenthone.hackernews.data.Const
 import io.github.jenthone.hackernews.databinding.FragmentStoryBinding
+import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
-import io.github.jenthone.hackernews.entity.Item
 import io.github.jenthone.hackernews.helper.observeNotNull
 import io.github.jenthone.hackernews.helper.openLink
-import io.github.jenthone.hackernews.mapper.toPresentation
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
 import timber.log.Timber
 
@@ -104,7 +103,7 @@ class StoryFragment : Fragment() {
             when (result) {
                 is AsyncResult.Success -> {
                     requireBinding.rcvItem.post {
-                        adapter.notify(result.data.toPresentation())
+                        adapter.notify(result.data)
                     }
                 }
             }

@@ -5,16 +5,11 @@ import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import tech.linjiang.pandora.Pandora
 import timber.log.Timber
 
 fun Application.attachToDebugger() {
     Stetho.initializeWithDefaults(this)
     Timber.plant(Timber.DebugTree())
-}
-
-fun Application.openDebugger() {
-    Pandora.get().open()
 }
 
 fun OkHttpClient.Builder.attachToDebugger() {
@@ -25,5 +20,4 @@ fun OkHttpClient.Builder.attachToDebugger() {
         }
     )
     addNetworkInterceptor(StethoInterceptor())
-    addInterceptor(Pandora.get().interceptor)
 }

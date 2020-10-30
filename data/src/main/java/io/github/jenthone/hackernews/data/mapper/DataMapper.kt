@@ -44,5 +44,11 @@ fun ItemEntity.toDomain() = Item(
 )
 
 fun Item.toLocal() = ItemEntity(
-    id, type, by, time, text, url, title
+    id,
+    type,
+    by,
+    time,
+    text,
+    url,
+    title
 )
