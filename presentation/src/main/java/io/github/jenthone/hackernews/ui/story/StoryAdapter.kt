@@ -18,15 +18,14 @@ class StoryAdapter(
     private val listener: StoryAdapterListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == TYPE_STORY_EMPTY) {
-            return StoryEmptyViewHolder.create(parent)
+        return if (viewType == TYPE_STORY_EMPTY) {
+            StoryEmptyViewHolder.create(parent)
+        } else {
+            StoryViewHolder.create(parent)
         }
-        return StoryViewHolder.create(parent)
     }
 
-    override fun getItemCount(): Int {
-        return ids.size
-    }
+    override fun getItemCount(): Int = ids.size
 
     override fun getItemViewType(position: Int): Int {
         val item = items[ids[position]]
@@ -39,11 +38,10 @@ class StoryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val id = ids[position]
-        val item = items[id]
 
         when (holder) {
             is StoryViewHolder -> {
-                item?.let { holder.bind(it, listener) }
+                items[id]?.let { holder.bind(it, listener) }
             }
             is StoryEmptyViewHolder -> {
                 holder.bind(id, listener)
