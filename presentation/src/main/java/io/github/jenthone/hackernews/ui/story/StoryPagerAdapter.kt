@@ -14,9 +14,7 @@ class StoryPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(
         return StoryFragment.newInstance(type.name)
     }
 
-    override fun getCount(): Int {
-        return StoryType.values().size
-    }
+    override fun getCount(): Int = StoryType.values().size
 
     override fun getPageTitle(position: Int): CharSequence? {
         val type = StoryType.values()[position]

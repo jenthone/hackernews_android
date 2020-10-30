@@ -21,17 +21,7 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class StoryFragment : Fragment() {
-    companion object {
-        fun newInstance(type: String) = StoryFragment()
-            .apply {
-                arguments = Bundle().apply {
-                    this.putString("type", type)
-                }
-            }
-    }
-
     private var binding: FragmentStoryBinding? = null
-    private val requireBinding get() = requireNotNull(binding)
 
     private val vmItem: ItemViewModel by viewModels()
 
@@ -50,8 +40,9 @@ class StoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentStoryBinding.inflate(inflater, container, false)
-        return requireBinding.root
+        val binding = FragmentStoryBinding.inflate(inflater, container, false)
+        this.binding = binding
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,12 +55,12 @@ class StoryFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         binding = null
+        super.onDestroyView()
     }
 
     private fun initViews() {
-        with(requireBinding) {
+        binding?.apply {
             rcvItem.layoutManager = LinearLayoutManager(context)
             rcvItem.addItemDecoration(
                 DividerItemDecoration(
@@ -86,8 +77,8 @@ class StoryFragment : Fragment() {
     }
 
     private fun initViewModels() {
-        vmItem.liveResultStories.observeNotNull(viewLifecycleOwner) { result ->
-            requireBinding.srlItem.isRefreshing = false
+        vmItem.resultStories.observeNotNull(viewLifecycleOwner) { result ->
+            binding?.srlItem?.isRefreshing = false
             when (result) {
                 is AsyncResult.Success -> {
                     Timber.d(result.data.toString())
@@ -96,16 +87,18 @@ class StoryFragment : Fragment() {
                 is AsyncResult.Error -> {
                     Timber.e(result.exception)
                 }
+                else -> Unit
             }
         }
 
-        vmItem.liveResultItem.observeNotNull(viewLifecycleOwner) { result ->
+        vmItem.resultItem.observeNotNull(viewLifecycleOwner) { result ->
             when (result) {
                 is AsyncResult.Success -> {
-                    requireBinding.rcvItem.post {
+                    binding?.rcvItem?.post {
                         adapter.notify(result.data)
                     }
                 }
+                else -> Unit
             }
         }
     }
@@ -128,10 +121,18 @@ class StoryFragment : Fragment() {
             }
         )
 
-        requireBinding.rcvItem.adapter = adapter
+        binding?.rcvItem?.adapter = adapter
     }
 
-    private fun fetchData() {
+    private fun fetchData() =
         vmItem.fetchItems(type)
+
+    companion object {
+        fun newInstance(type: String) = StoryFragment()
+            .apply {
+                arguments = Bundle().apply {
+                    this.putString("type", type)
+                }
+            }
     }
 }

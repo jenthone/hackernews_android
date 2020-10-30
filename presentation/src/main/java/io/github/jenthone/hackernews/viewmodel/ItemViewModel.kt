@@ -16,22 +16,22 @@ class ItemViewModel @ViewModelInject constructor(
     private val itemRepository: ItemRepository,
     private val storyRepository: StoryRepository
 ) : ViewModel() {
-    private val resultStories = MutableLiveData<AsyncResult<List<Int>>>(AsyncResult.Initialize)
-    val liveResultStories: LiveData<AsyncResult<List<Int>>> = resultStories
-    private val resultItem = MutableLiveData<AsyncResult<Item>>(AsyncResult.Initialize)
-    val liveResultItem: LiveData<AsyncResult<Item>> = resultItem
+    private val modifiableResultStories = MutableLiveData<AsyncResult<List<Int>>>(AsyncResult.Initialize)
+    val resultStories: LiveData<AsyncResult<List<Int>>> = modifiableResultStories
+    private val modifiableResultItem = MutableLiveData<AsyncResult<Item>>(AsyncResult.Initialize)
+    val resultItem: LiveData<AsyncResult<Item>> = modifiableResultItem
 
     fun fetchItems(type: StoryType) {
         viewModelScope.launch {
-            resultStories.value = AsyncResult.Loading
-            resultStories.postValue(storyRepository.fetchStories(type))
+            modifiableResultStories.value = AsyncResult.Loading
+            modifiableResultStories.postValue(storyRepository.fetchStories(type))
         }
     }
 
     fun fetchItem(id: Int) {
         viewModelScope.launch {
-            resultItem.postValue(itemRepository.fetchOfflineItem(id))
-            resultItem.postValue(itemRepository.fetchItem(id))
+            modifiableResultItem.postValue(itemRepository.fetchOfflineItem(id))
+            modifiableResultItem.postValue(itemRepository.fetchItem(id))
         }
     }
 }

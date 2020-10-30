@@ -17,11 +17,6 @@ class StoryAdapter(
     private val items: MutableMap<Int, Item> = mutableMapOf(),
     private val listener: StoryAdapterListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    companion object {
-        const val TYPE_STORY_ITEM = 0
-        const val TYPE_STORY_EMPTY = 100
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_STORY_EMPTY) {
             return StoryEmptyViewHolder.create(parent)
@@ -48,7 +43,7 @@ class StoryAdapter(
 
         when (holder) {
             is StoryViewHolder -> {
-                holder.bind(item, listener)
+                item?.let { holder.bind(it, listener) }
             }
             is StoryEmptyViewHolder -> {
                 holder.bind(id, listener)
@@ -59,6 +54,11 @@ class StoryAdapter(
     fun notify(item: Item) {
         items[item.id] = item
         notifyItemChanged(ids.indexOf(item.id))
+    }
+
+    companion object {
+        const val TYPE_STORY_ITEM = 0
+        const val TYPE_STORY_EMPTY = 100
     }
 }
 
@@ -72,9 +72,7 @@ class StoryViewHolder(private val binding: ItemStoryBinding) :
         }
     }
 
-    fun bind(item: Item?, listener: StoryAdapterListener) {
-        item ?: return
-
+    fun bind(item: Item, listener: StoryAdapterListener) {
         binding.tvTitle.text = item.title
 
         binding.tvBy.text = item.by
@@ -113,7 +111,7 @@ class StoryViewHolder(private val binding: ItemStoryBinding) :
     }
 }
 
-class StoryEmptyViewHolder(private val binding: ItemStoryEmptyBinding) :
+class StoryEmptyViewHolder(binding: ItemStoryEmptyBinding) :
     RecyclerView.ViewHolder(binding.root) {
     companion object {
         fun create(parent: ViewGroup): StoryEmptyViewHolder {

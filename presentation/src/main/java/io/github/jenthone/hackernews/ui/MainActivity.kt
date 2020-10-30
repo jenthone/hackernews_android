@@ -22,10 +22,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        adapter = StoryPagerAdapter(
-            supportFragmentManager
-        )
-        with(binding) {
+        adapter = StoryPagerAdapter(supportFragmentManager)
+        binding.apply {
             vpMain.adapter = adapter
             vpMain.offscreenPageLimit = StoryType.values().size
             tlMain.setupWithViewPager(vpMain)
