@@ -47,7 +47,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$core_ktx_version"
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.google.android.material:material:1.2.1'
@@ -65,9 +65,9 @@ dependencies {
 
     implementation "androidx.fragment:fragment-ktx:1.2.5"
 
-    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.6.Final'
 
-    def hilt_version = "2.28-alpha"
+    def hilt_version = '2.29.1-alpha'
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 

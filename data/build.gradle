@@ -34,11 +34,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$core_ktx_version"
-    testImplementation 'junit:junit:4.13'
+
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation "androidx.test.ext:junit:$junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 
-    def okhttp_version = "4.8.1"
+    def okhttp_version = '4.9.0'
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
     api "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
@@ -46,7 +47,7 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
     api "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
-    def moshi_version = "1.9.3"
+    def moshi_version = '1.11.0'
     api "com.squareup.moshi:moshi:$moshi_version"
     api "com.squareup.moshi:moshi-kotlin:$moshi_version"
     api "com.squareup.moshi:moshi-adapters:$moshi_version"
@@ -70,7 +71,7 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.13.1'
 
-    def hilt_version = "2.28-alpha"
+    def hilt_version = '2.29.1-alpha'
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
