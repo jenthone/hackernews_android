@@ -13,14 +13,14 @@ import javax.inject.Inject
 class ItemRepositoryImpl @Inject constructor(
     private val service: ItemService,
     private val itemDao: ItemDao
-) :
-    ItemRepository {
+) : ItemRepository {
     override suspend fun fetchOfflineItem(id: Int): Result<Item> {
         val localEntity = itemDao.fetch(id)
-        if (localEntity != null) {
-            return Result.success(localEntity.toDomain())
+        return if (localEntity != null) {
+            Result.success(localEntity.toDomain())
+        } else {
+            Result.failure(DataNotFoundException())
         }
-        return Result.failure(DataNotFoundException())
     }
 
     override suspend fun fetchItem(id: Int): Result<Item> {
