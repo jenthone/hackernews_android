@@ -13,11 +13,9 @@ import io.github.jenthone.hackernews.data.Const
 import io.github.jenthone.hackernews.databinding.FragmentStoryBinding
 import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.domain.entity.StoryType
-import io.github.jenthone.hackernews.domain.helper.AsyncResult
 import io.github.jenthone.hackernews.helper.observeNotNull
 import io.github.jenthone.hackernews.helper.openLink
 import io.github.jenthone.hackernews.viewmodel.ItemViewModel
-import timber.log.Timber
 
 @AndroidEntryPoint
 class StoryFragment : Fragment() {
@@ -79,26 +77,15 @@ class StoryFragment : Fragment() {
     private fun initViewModels() {
         vmItem.resultStories.observeNotNull(viewLifecycleOwner) { result ->
             binding?.srlItem?.isRefreshing = false
-            when (result) {
-                is AsyncResult.Success -> {
-                    Timber.d(result.data.toString())
-                    initAdapter(result.data)
-                }
-                is AsyncResult.Error -> {
-                    Timber.e(result.exception)
-                }
-                else -> Unit
-            }
+            val data = result.getOrNull() ?: return@observeNotNull
+
+            initAdapter(data)
         }
 
         vmItem.resultItem.observeNotNull(viewLifecycleOwner) { result ->
-            when (result) {
-                is AsyncResult.Success -> {
-                    binding?.rcvItem?.post {
-                        adapter.notify(result.data)
-                    }
-                }
-                else -> Unit
+            val data = result.getOrNull() ?: return@observeNotNull
+            binding?.rcvItem?.post {
+                adapter.notify(data)
             }
         }
     }
