@@ -1,6 +1,5 @@
 package io.github.jenthone.hackernews.data.repository
 
-import io.github.jenthone.hackernews.data.helper.safeResult
 import io.github.jenthone.hackernews.data.local.ItemDao
 import io.github.jenthone.hackernews.data.mapper.toDomain
 import io.github.jenthone.hackernews.data.mapper.toLocal
@@ -24,12 +23,12 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchItem(id: Int): Result<Item> {
-        return safeResult {
+        return runCatching {
             val item = service.fetchItem(id).toDomain()
             itemDao.insert(
                 item.toLocal()
             )
-            return@safeResult item
+            return@runCatching item
         }
     }
 }
