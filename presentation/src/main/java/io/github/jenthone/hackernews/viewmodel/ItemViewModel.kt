@@ -8,13 +8,14 @@ import androidx.lifecycle.viewModelScope
 import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.helper.AsyncResult
-import io.github.jenthone.hackernews.domain.repository.ItemRepository
-import io.github.jenthone.hackernews.domain.repository.StoryRepository
+import io.github.jenthone.hackernews.domain.usecase.GetItemUseCase
+import io.github.jenthone.hackernews.domain.usecase.GetStoriesUseCase
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ItemViewModel @ViewModelInject constructor(
-    private val itemRepository: ItemRepository,
-    private val storyRepository: StoryRepository
+    private val getItemUseCase: GetItemUseCase,
+    private val getStoriesUseCase: GetStoriesUseCase
 ) : ViewModel() {
     private val modifiableResultStories = MutableLiveData<AsyncResult<List<Int>>>(
         AsyncResult.Initialize
@@ -26,14 +27,15 @@ class ItemViewModel @ViewModelInject constructor(
     fun fetchItems(type: StoryType) {
         viewModelScope.launch {
             modifiableResultStories.value = AsyncResult.Loading
-            modifiableResultStories.postValue(storyRepository.fetchStories(type))
+            modifiableResultStories.postValue(getStoriesUseCase.execute(type))
         }
     }
 
     fun fetchItem(id: Int) {
         viewModelScope.launch {
-            modifiableResultItem.postValue(itemRepository.fetchOfflineItem(id))
-            modifiableResultItem.postValue(itemRepository.fetchItem(id))
+            getItemUseCase.execute(id).collect {
+                modifiableResultItem.postValue(it)
+            }
         }
     }
 }
