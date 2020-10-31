@@ -16,7 +16,9 @@ class ItemViewModel @ViewModelInject constructor(
     private val itemRepository: ItemRepository,
     private val storyRepository: StoryRepository
 ) : ViewModel() {
-    private val modifiableResultStories = MutableLiveData<AsyncResult<List<Int>>>(AsyncResult.Initialize)
+    private val modifiableResultStories = MutableLiveData<AsyncResult<List<Int>>>(
+        AsyncResult.Initialize
+    )
     val resultStories: LiveData<AsyncResult<List<Int>>> = modifiableResultStories
     private val modifiableResultItem = MutableLiveData<AsyncResult<Item>>(AsyncResult.Initialize)
     val resultItem: LiveData<AsyncResult<Item>> = modifiableResultItem
