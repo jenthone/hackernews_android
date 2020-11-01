@@ -9,7 +9,6 @@ import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.domain.usecase.GetItemUseCase
 import io.github.jenthone.hackernews.domain.usecase.GetStoriesUseCase
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ItemViewModel @ViewModelInject constructor(
@@ -29,9 +28,7 @@ class ItemViewModel @ViewModelInject constructor(
 
     fun fetchItem(id: Int) {
         viewModelScope.launch {
-            getItemUseCase.execute(id).collect {
-                modifiableResultItem.postValue(it)
-            }
+            modifiableResultItem.postValue(getItemUseCase.execute(id))
         }
     }
 }

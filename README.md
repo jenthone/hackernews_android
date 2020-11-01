@@ -11,7 +11,6 @@ Simple Hacker News app implement in Android using Clean Architecture and Android
 
 - [Debug Tools]
     - [Stetho](https://github.com/facebook/stetho) - A debug bridge for Android applications, enabling the powerful Chrome Developer Tools and much more.
-    - [Pandora](https://github.com/whataa/pandora) - An android library for debugging what we care about directly in app.
     - [Timber](https://github.com/JakeWharton/timber) - A logger with a small, extensible API which provides utility on top of Android's normal Log class.
     - [Leak Canary](https://github.com/square/leakcanary) - A memory leak detection library for Android
 - [Dependency Injection]
