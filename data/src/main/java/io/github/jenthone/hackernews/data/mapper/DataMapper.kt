@@ -7,48 +7,8 @@ import io.github.jenthone.hackernews.domain.entity.StoryType
 
 fun StoryType.toData() = name.toLowerCase()
 
-fun ItemResponse.toDomain() = Item(
-    id,
-    deleted,
-    type,
-    by,
-    time,
-    text,
-    dead,
-    parent,
-    poll,
-    kids,
-    url,
-    score,
-    title,
-    parts,
-    descendants
-)
+fun ItemResponse.toDomain() = Item(id, type, by, time, text, url, score, title, descendants)
 
-fun ItemEntity.toDomain() = Item(
-    id,
-    null,
-    type,
-    by,
-    time,
-    text,
-    null,
-    null,
-    null,
-    null,
-    url,
-    null,
-    title,
-    null,
-    null
-)
+fun ItemEntity.toDomain() = Item(id, type, by, time, text, url, score, title, descendants)
 
-fun Item.toLocal() = ItemEntity(
-    id,
-    type,
-    by,
-    time,
-    text,
-    url,
-    title
-)
+fun Item.toLocal() = ItemEntity(id, type, by, time, text, url, score, title, descendants)

@@ -15,22 +15,21 @@ import io.github.jenthone.hackernews.domain.entity.Item
 import io.github.jenthone.hackernews.domain.entity.StoryType
 import io.github.jenthone.hackernews.helper.observeNotNull
 import io.github.jenthone.hackernews.helper.openLink
-import io.github.jenthone.hackernews.viewmodel.ItemViewModel
 
 @AndroidEntryPoint
 class StoryFragment : Fragment() {
     private var binding: FragmentStoryBinding? = null
 
-    private val vmItem: ItemViewModel by viewModels()
+    private val storyViewModel: StoryViewModel by viewModels()
 
-    private lateinit var adapter: StoryAdapter
+    private lateinit var storyAdapter: StoryAdapter
 
-    private lateinit var type: StoryType
+    private lateinit var storyType: StoryType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        type = StoryType.valueOf(arguments?.getString("type") ?: return)
+        storyType = StoryType.valueOf(arguments?.getString("type") ?: return)
     }
 
     override fun onCreateView(
@@ -75,27 +74,27 @@ class StoryFragment : Fragment() {
     }
 
     private fun initViewModels() {
-        vmItem.resultStories.observeNotNull(viewLifecycleOwner) { result ->
+        storyViewModel.stories.observeNotNull(viewLifecycleOwner) { result ->
             binding?.srlItem?.isRefreshing = false
             val data = result.getOrNull() ?: return@observeNotNull
 
             initAdapter(data)
         }
 
-        vmItem.resultItem.observeNotNull(viewLifecycleOwner) { result ->
+        storyViewModel.item.observeNotNull(viewLifecycleOwner) { result ->
             val data = result.getOrNull() ?: return@observeNotNull
             binding?.rcvItem?.post {
-                adapter.notify(data)
+                storyAdapter.notify(data)
             }
         }
     }
 
     private fun initAdapter(ids: List<Int>) {
-        adapter = StoryAdapter(
+        storyAdapter = StoryAdapter(
             ids,
             listener = object : StoryAdapterListener {
                 override fun onBindEmptyItem(id: Int) {
-                    vmItem.fetchItem(id)
+                    storyViewModel.fetchItem(id)
                 }
 
                 override fun onOpenItemUrl(item: Item) {
@@ -108,11 +107,11 @@ class StoryFragment : Fragment() {
             }
         )
 
-        binding?.rcvItem?.adapter = adapter
+        binding?.rcvItem?.adapter = storyAdapter
     }
 
     private fun fetchData() =
-        vmItem.fetchItems(type)
+        storyViewModel.fetchItems(storyType)
 
     companion object {
         fun newInstance(type: String) = StoryFragment()

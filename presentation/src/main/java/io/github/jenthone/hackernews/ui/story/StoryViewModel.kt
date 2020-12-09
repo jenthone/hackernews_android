@@ -1,4 +1,4 @@
-package io.github.jenthone.hackernews.viewmodel
+package io.github.jenthone.hackernews.ui.story
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
@@ -11,24 +11,24 @@ import io.github.jenthone.hackernews.domain.usecase.GetItemUseCase
 import io.github.jenthone.hackernews.domain.usecase.GetStoriesUseCase
 import kotlinx.coroutines.launch
 
-class ItemViewModel @ViewModelInject constructor(
+class StoryViewModel @ViewModelInject constructor(
     private val getItemUseCase: GetItemUseCase,
     private val getStoriesUseCase: GetStoriesUseCase
 ) : ViewModel() {
-    private val modifiableResultStories = MutableLiveData<Result<List<Int>>>()
-    val resultStories: LiveData<Result<List<Int>>> = modifiableResultStories
-    private val modifiableResultItem = MutableLiveData<Result<Item>>()
-    val resultItem: LiveData<Result<Item>> = modifiableResultItem
+    private val modifiableStories = MutableLiveData<Result<List<Int>>>()
+    val stories: LiveData<Result<List<Int>>> = modifiableStories
+    private val modifiableItem = MutableLiveData<Result<Item>>()
+    val item: LiveData<Result<Item>> = modifiableItem
 
     fun fetchItems(type: StoryType) {
         viewModelScope.launch {
-            modifiableResultStories.postValue(getStoriesUseCase.execute(type))
+            modifiableStories.postValue(getStoriesUseCase.execute(type))
         }
     }
 
     fun fetchItem(id: Int) {
         viewModelScope.launch {
-            modifiableResultItem.postValue(getItemUseCase.execute(id))
+            modifiableItem.postValue(getItemUseCase.execute(id))
         }
     }
 }

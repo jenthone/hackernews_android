@@ -12,5 +12,7 @@ data class ItemEntity(
     val time: Int?,
     val text: String?,
     val url: String?,
-    val title: String?
+    val score: Int?,
+    val title: String?,
+    val descendants: Int?
 )

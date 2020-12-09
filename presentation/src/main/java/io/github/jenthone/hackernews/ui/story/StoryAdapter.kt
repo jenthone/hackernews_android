@@ -10,7 +10,7 @@ import io.github.jenthone.hackernews.data.helper.glide.loadThumbnail
 import io.github.jenthone.hackernews.databinding.ItemStoryBinding
 import io.github.jenthone.hackernews.databinding.ItemStoryEmptyBinding
 import io.github.jenthone.hackernews.domain.entity.Item
-import io.github.jenthone.hackernews.helper.timeFormat
+import io.github.jenthone.hackernews.helper.DateHelper
 
 class StoryAdapter(
     private val ids: List<Int>,
@@ -80,11 +80,11 @@ class StoryViewHolder(private val binding: ItemStoryBinding) :
             binding.tvUrl.text = Uri.parse(it).host
         }
 
-        binding.imvThumbnail.loadThumbnail(item.url.orEmpty(), R.mipmap.ic_launcher)
+        binding.imvThumbnail.loadThumbnail(item.url.orEmpty(), R.drawable.logo)
 
         binding.tvTime.isVisible = item.time != null
         item.time?.let {
-            binding.tvTime.text = it.timeFormat()
+            binding.tvTime.text = DateHelper.formatTime(it)
         }
 
         binding.tvUrl.setOnClickListener {
